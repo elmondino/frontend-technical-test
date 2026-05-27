@@ -5,19 +5,19 @@
 }
 
 body {
-  margin: 0;
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
   background-color: #fff;
   color: #333;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  margin: 0;
 }
 
 img {
-  max-width: 100%;
   display: block;
+  max-width: 100%;
 }
 
 .root {
-  max-width: 1440px;
   margin: 0 auto;
+  max-width: 1440px;
   padding: 2rem 1.5rem;
 }

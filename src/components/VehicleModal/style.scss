@@ -1,35 +1,39 @@
 .vehicle-modal__backdrop {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 1000;
-  display: flex;
   align-items: center;
+  background-color: rgba(0, 0, 0, .6);
+  display: flex;
+  inset: 0;
   justify-content: center;
+  position: fixed;
+  z-index: 1000;
 }
 
 .vehicle-modal {
-  position: relative;
+  animation: modal-fade-in .2s ease;
   background-color: #fff;
-  padding: 2rem;
-  width: 90%;
-  max-width: 480px;
+  left: 50%;
   max-height: 90vh;
+  max-width: 480px;
   overflow-y: auto;
-  animation: modal-fade-in 0.2s ease;
+  padding: 2rem;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  z-index: 1001;
 
   &__close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
     appearance: none;
     background: none;
-    border: none;
+    border: 0;
+    color: #333;
+    cursor: pointer;
     font-size: 1.5rem;
     line-height: 1;
-    cursor: pointer;
-    color: #333;
-    padding: 0.25rem 0.5rem;
+    padding: .25rem .5rem;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
 
     &:focus-visible {
       outline: 2px solid #333;
@@ -38,52 +42,54 @@
   }
 
   &__title {
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: Georgia, "Times New Roman", serif;
     font-size: 1.25rem;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    text-decoration: underline;
+    letter-spacing: .1em;
     margin: 0 0 1.5rem;
     padding-right: 2rem; // avoid overlap with close button
+    text-decoration: underline;
+    text-transform: uppercase;
   }
 
   &__details {
-    margin: 0;
     display: grid;
+    gap: .5rem 1.5rem;
     grid-template-columns: auto 1fr;
-    gap: 0.5rem 1.5rem;
+    margin: 0;
   }
 
   &__term {
-    font-weight: 700;
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     color: #333;
+    font-size: .875rem;
+    font-weight: 700;
+    letter-spacing: .05em;
     margin: 0;
+    text-transform: uppercase;
   }
 
   &__description {
-    font-size: 0.875rem;
     color: #555;
+    font-size: .875rem;
     margin: 0;
   }
 }
 
 @keyframes modal-fade-in {
+
   from {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translate(-50%, calc(-50% - 8px));
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, -50%);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .vehicle-modal {
     animation: none;
   }

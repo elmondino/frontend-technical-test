@@ -96,4 +96,6 @@ const VehicleCard = React.memo(({
   );
 });
 
+VehicleCard.displayName = 'VehicleCard';
+
 export default VehicleCard;

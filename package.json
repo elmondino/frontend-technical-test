@@ -4,8 +4,9 @@
   "description": "",
   "repository": "https://github.com/connect-group/frontend-technical-test",
   "scripts": {
-    "start": "webpack serve --mode development",
-    "build": "webpack --mode production",
+    "postinstall": "node -e \"const fs=require('fs'),path=require('path'),p=path.join(path.dirname(require.resolve('postcss')),'..','package.json'),pkg=JSON.parse(fs.readFileSync(p,'utf8'));Object.assign(pkg.exports,{'./lib/input':'./lib/input.js','./lib/root':'./lib/root.js','./lib/parse':'./lib/parse.js','./lib/stringify':'./lib/stringify.js','./package.json':'./package.json'});fs.writeFileSync(p,JSON.stringify(pkg,null,2));console.log('postcss: patched exports for Node 17+ compatibility');\"",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider webpack serve --mode development",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider webpack --mode production",
     "test": "jest",
     "test:watch": "npm run test -- --watch",
     "lint": "npm run lint:js && npm run lint:css",

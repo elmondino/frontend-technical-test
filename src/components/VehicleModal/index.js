@@ -55,16 +55,18 @@ export default function VehicleModal({ vehicle, onClose }) {
     : null;
 
   return (
-    <div className="vehicle-modal__backdrop" aria-hidden="true" onClick={onClose}>
-      {/* Stop click propagation so clicking inside dialog doesn't close it */}
-      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
+    <>
+      {/* Backdrop: visual overlay only, hidden from screen readers */}
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+      <div className="vehicle-modal__backdrop" aria-hidden="true" onClick={onClose} />
+
+      {/* Dialog: sibling of backdrop so aria-hidden does not affect it */}
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="vehicle-modal-title"
         ref={dialogRef}
         className="vehicle-modal"
-        onClick={(e) => e.stopPropagation()}
       >
         <button
           ref={closeBtnRef}
@@ -111,6 +113,6 @@ export default function VehicleModal({ vehicle, onClose }) {
           )}
         </dl>
       </div>
-    </div>
+    </>
   );
 }
