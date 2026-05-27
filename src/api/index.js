@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import { request } from './helpers';
 
 /**
@@ -6,7 +5,19 @@ import { request } from './helpers';
  *
  * @return {Promise<Array.<vehicleSummaryPayload>>}
  */
-// TODO: All API related logic should be made inside this function.
 export default async function getData() {
-  return [];
+  const vehicles = await request('/api/vehicles.json');
+
+  // Guard: filter out entries where apiUrl is missing or falsy (broken)
+  const validVehicles = vehicles.filter((v) => v.apiUrl);
+
+  const results = await Promise.allSettled(
+    validVehicles.map((v) => request(v.apiUrl)),
+  );
+
+  return results
+    .map((result, i) => ({ result, base: validVehicles[i] }))
+    .filter(({ result }) => result.status === 'fulfilled')
+    .map(({ result, base }) => ({ ...base, ...result.value }))
+    .filter(({ price }) => price && price.trim() !== '');
 }

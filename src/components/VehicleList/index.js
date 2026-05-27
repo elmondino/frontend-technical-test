@@ -1,40 +1,55 @@
 import React from 'react';
 import useData from './useData';
+import VehicleCard from '../VehicleCard';
 import './style.scss';
 
+const SKELETON_COUNT = 4;
+
 export default function VehicleList() {
-  // eslint-disable-next-line no-unused-vars
   const [loading, error, vehicles] = useData();
 
   if (loading) {
-    return <div data-testid="loading">Loading</div>;
+    return (
+      <main className="vehicle-list">
+        <div data-testid="loading" className="vehicle-list__loading" aria-busy="true" aria-label="Loading vehicles">
+          <ul className="vehicle-list__grid vehicle-list__grid--skeleton" aria-hidden="true">
+            {Array.from({ length: SKELETON_COUNT }).map((_, i) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <li key={i} className="vehicle-list__item">
+                <div className="vehicle-list__skeleton" />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </main>
+    );
   }
 
   if (error) {
-    return <div data-testid="error">{ error }</div>;
+    return (
+      <main className="vehicle-list">
+        <div data-testid="error" className="vehicle-list__error">{error}</div>
+      </main>
+    );
   }
 
   return (
-    <div data-testid="results">
-      <p>List of vehicles will be displayed here</p>
-      <p>
-        Visit
-        <a href="/api/vehicles.json" target="_blank"> /api/vehicles.json</a>
-        {' '}
-        (main endpoint)
-      </p>
-      <p>
-        Visit
-        <a href="/api/vehicle_fpace.json" target="_blank">/api/vehicle_fpace.json</a>
-        {' '}
-        (detail endpoint - apiUrl)
-      </p>
-      <p>
-        Visit
-        <a href="/api/vehicle_xf.json" target="_blank">/api/vehicle_xf.json</a>
-        {' '}
-        (vehicle without any price)
-      </p>
-    </div>
+    <main className="vehicle-list">
+      <h1 className="vehicle-list__title">Our Vehicles</h1>
+      <ul className="vehicle-list__grid" data-testid="results">
+        {Array.isArray(vehicles) && vehicles.map((vehicle, index) => (
+          <li key={vehicle.id} className="vehicle-list__item">
+            <VehicleCard
+              id={vehicle.id}
+              description={vehicle.description}
+              price={vehicle.price}
+              media={vehicle.media}
+              meta={vehicle.meta}
+              index={index}
+            />
+          </li>
+        ))}
+      </ul>
+    </main>
   );
 }

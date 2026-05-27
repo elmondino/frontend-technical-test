@@ -1,21 +1,14 @@
-import { useState, useEffect } from 'react';
-import getData from '../../api';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchVehicles } from '../../store/vehiclesSlice';
 
 export default function useData() {
-  const [vehicles, setVehicles] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const { loading, error, data: vehicles } = useSelector((state) => state.vehicles);
 
   useEffect(() => {
-    getData()
-      .then((response) => setVehicles(response))
-      .catch((err) => setError(err))
-      .finally(() => setLoading(false));
-  }, []);
+    dispatch(fetchVehicles());
+  }, [dispatch]);
 
-  return [
-    loading,
-    error,
-    vehicles,
-  ];
+  return [loading, error, vehicles];
 }
